@@ -1,5 +1,5 @@
 import express from 'express';
-import { getChannelPost, getChannelList, postChannelPost, patchChannelPost, deleteChannelPost, getCommentList, postChannelComment, patchChannelComment, deleteChannelComment } from '../controllers/channelController.js';
+import { getChannelPost, getChannelList, postChannelPost, patchChannelPost, deleteChannelPost, getCommentList, postChannelComment, patchChannelComment, deleteChannelComment, channelViewCount } from '../controllers/channelController.js';
 import { authenticateToken } from './../middlewares/auth.js';
 const router = express.Router();
 
@@ -118,23 +118,20 @@ router.patch('/post', authenticateToken, patchChannelPost);
 
 /**
  * @swagger
- * /channels/post:
+ * /channels/post/{post_id}:
  *   delete:
  *     summary: 채널 게시글 삭제
  *     tags: [Channels]
  *     description: post_id를 전달받아 게시글을 삭제합니다.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - post_id
- *             properties:
- *               post_id:
- *                 type: integer
- *                 example: 1
+ *     parameters:
+ *       - in: path
+ *         name: post_id
+ *         required: true
+ *         description: 삭제할 게시글 ID
+ *         schema:
+ *           type: integer
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: 삭제 성공
@@ -145,7 +142,7 @@ router.patch('/post', authenticateToken, patchChannelPost);
  *       500:
  *         description: 서버 에러
  */
-router.delete('/post', authenticateToken, deleteChannelPost);
+router.delete('/post/:post_id', authenticateToken, deleteChannelPost);
 
 /**
  * @swagger
@@ -241,23 +238,20 @@ router.patch('/comment', authenticateToken, patchChannelComment);
 
 /**
  * @swagger
- * /channels/comments:
+ * /channels/comment/{comment_id}:
  *   delete:
  *     summary: 채널 댓글 삭제
  *     tags: [Channels]
  *     description: comment_id를 전달받아 본인의 댓글을 삭제합니다.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - comment_id
- *             properties:
- *               comment_id:
- *                 type: integer
- *                 example: 3
+ *     parameters:
+ *       - in: path
+ *         name: comment_id
+ *         required: true
+ *         description: 삭제할 게시글 ID
+ *         schema:
+ *           type: integer
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: 삭제 성공
@@ -268,8 +262,43 @@ router.patch('/comment', authenticateToken, patchChannelComment);
  *       500:
  *         description: 서버 에러
  */
-router.delete('/comment', authenticateToken, deleteChannelComment);
+router.delete('/comment/:comment_id', authenticateToken, deleteChannelComment);
 
+/**
+ * @swagger
+ * /channels/post/{post_id}/view:
+ *   put:
+ *     summary: 채널 게시글 조회수 증가
+ *     description: 쿠키를 이용해 중복 조회수 증가를 방지합니다.
+ *     tags: [Channels]
+ *     parameters:
+ *       - in: path
+ *         name: post_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 조회수를 증가시킬 게시글 ID
+ *     responses:
+ *       200:
+ *         description: 조회수 반영 완료
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: boolean
+ *                   example: false
+ *                 msg:
+ *                   type: string
+ *                   example: 조회수 반영 완료
+ *       400:
+ *         description: 잘못된 요청 (post_id 누락 등)
+ *       500:
+ *         description: 서버 에러 발생
+ */
+
+router.put('/post/:post_id/view', channelViewCount);
 
 
 export default router;
