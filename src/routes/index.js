@@ -20,5 +20,7 @@ router.use('/board', postRoutes);
 router.get('/', (req, res) => {
   res.send('RUNNING API');
 });
-
+router.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 export default router;
