@@ -23,4 +23,6 @@ app.use(cookieParser());
 app.use('/api', router); // 모든 API는 /api로 시작하게 설정
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
+    console.log(`Process Port : ${process.env.PORT}`);
+    console.log(`DATABASE_URL : ${process.env.DATABASE_URL}`);
 });
