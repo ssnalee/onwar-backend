@@ -4,6 +4,7 @@ import router from './routes/index.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './docs/swagger.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 /**
  * 미들웨어 설정 (express.json)
  * 라우터 등록
@@ -15,6 +16,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors());
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(cookieParser()); 
 
