@@ -52,7 +52,7 @@ export const postBattletag = async (req, res) => {
 
 export const patchBattletag = async (req, res) => {
     const user_id = req.user.userId;
-    const post_id = parseInt(req.query.post_id, 10);
+    const post_id = req.query.post_id;
     const { battletag } = req.query;
     if (!user_id || !post_id || !battletag) {
         return res.status(400).json({ error: true, data: null, msg: '유저 아이디가 존재하지 않습니다.' });
@@ -81,7 +81,8 @@ export const patchBattletag = async (req, res) => {
 
 export const deleteBattletag = async (req, res) => {
     const user_id = req.user.userId;
-    const post_id = parseInt(req.query.post_id, 10);
+    // const post_id = parseInt(req.query.post_id, 10);
+    const post_id = req.query.post_id;
     if (!user_id || !post_id) {
         return res.status(400).json({ error: true, data: null, msg: '유저 아이디가 존재하지 않습니다.' });
     }

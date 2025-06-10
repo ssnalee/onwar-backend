@@ -11,58 +11,10 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: 배틀태그 목록 조회 성공
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: boolean
- *                   example: false
- *                 data:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       id:
- *                         type: integer
- *                         example: 1
- *                       battletag:
- *                         type: string
- *                         example: "Player#1234"
- *                 msg:
- *                   type: string
- *                   example: "OK"
  *       400:
  *         description: user_id가 없을 경우
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: boolean
- *                   example: true
- *                 data:
- *                   type: null
- *                 msg:
- *                   type: string
- *                   example: "유저 아이디가 존재하지 않습니다."
  *       500:
  *         description: 서버 에러 발생
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: boolean
- *                   example: true
- *                 data:
- *                   type: null
- *                 msg:
- *                   type: string
- *                   example: "서버 에러 발생"
  */
 
 router.get('/list', getBattletagList);
@@ -139,17 +91,6 @@ router.patch('/', patchBattletag);
  *     responses:
  *       200:
  *         description: 삭제 성공
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: boolean
- *                 data:
- *                   type: array
- *                 msg:
- *                   type: string
  *       400:
  *         description: 요청 파라미터 오류
  *       403:
