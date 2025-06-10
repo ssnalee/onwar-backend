@@ -17,10 +17,16 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use(cookieParser()); 
+app.use(cookieParser());
 
-app.use('/api', router); // 모든 API는 /api로 시작하게 설정
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+    next();
+});
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api', router);
+
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
     console.log(`Process Port : ${process.env.PORT}`);
