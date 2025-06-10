@@ -26,7 +26,6 @@ export const getBattletagList = async (req, res) => {
 export const postBattletag = async (req, res) => {
     const user_id = req.user.userId;
     const { battletag } = req.query;
-    console.log(req.query);
     if (!user_id || !battletag) {
         return res.status(400).json({ error: true, data: null, msg: '유저 아이디가 존재하지 않습니다.' });
     }

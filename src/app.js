@@ -19,10 +19,10 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
-app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+//     next();
+// });
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api', router);
@@ -30,5 +30,4 @@ app.use('/api', router);
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
     console.log(`Process Port : ${process.env.PORT}`);
-    console.log(`DATABASE_URL : ${process.env.DATABASE_URL}`);
 });
