@@ -2,6 +2,7 @@ import pool from '../db/pool.js';
 
 export const getChannelList = async (req, res) => {
     try {
+        console.log('Before DB query');
         const result = await pool.query(
             `SELECT 
                 channel_posts.id,
@@ -24,6 +25,7 @@ export const getChannelList = async (req, res) => {
             ORDER BY channel_posts.id DESC
             `
         )
+        console.log('After DB query');
         res.status(200).json({ error: false, data: result.rows, msg: "OK" })
     } catch (err) {
         res.status(500).json({ error: true, data: null, msg: "서버 에러 발생" });
